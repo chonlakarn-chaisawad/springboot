@@ -19,6 +19,7 @@
 //class ExampleControllerTest {
 //    @Autowired
 //    private MockMvc mockMvc;
+//    @Autowired
 //    private ExampleModelRepository exampleModelRepository;
 //
 //    @BeforeEach
