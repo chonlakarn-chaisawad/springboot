@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.snack;
 
 import org.apache.coyote.BadRequestException;
 import org.assertj.core.api.Assertions;

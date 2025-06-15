@@ -1,6 +1,5 @@
-package com.example.demo;
+package com.example.demo.snack;
 
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;

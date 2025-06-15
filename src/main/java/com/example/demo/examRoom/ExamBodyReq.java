@@ -9,6 +9,6 @@ import lombok.*;
 @ToString
 public class ExamBodyReq {
     private String teacherName;
-    private String studentAmount;
     private String subject;
+    private String studentAmount;
 }
