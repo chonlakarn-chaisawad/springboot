@@ -5,6 +5,9 @@ import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class CoffeeMakerService {
@@ -30,9 +33,6 @@ public class CoffeeMakerService {
             price += 10;
         }
         order.setIsMilk(req.getIsMilk());
-        if (req.getIsSyrup()) {
-            price += 5;
-        }
         order.setIsSyrup(req.getIsSyrup());
         order.setHowSweet(req.getHowSweet());
         if (req.getIsIce()) {
@@ -43,8 +43,55 @@ public class CoffeeMakerService {
             price += 5;
         }
         order.setIsTakeAway(req.getIsTakeAway());
+        if (req.getIsTakeAway()) {
+            price += 5;
+        }
         order.setPrice(price);
         coffeeMakerRepository.save(order);
         return order;
+    }
+
+    public List<CoffeeMakerModel> getOrder() {
+        return coffeeMakerRepository.findAll();
+    }
+
+    public CoffeeMakerModel getOrderById(Long id) throws BadRequestException {
+        Optional<CoffeeMakerModel> orderOption = coffeeMakerRepository.findById(id);
+        if (orderOption.isPresent()) {
+            CoffeeMakerModel order = orderOption.get();
+            return order;
+        }
+        throw new BadRequestException();
+    }
+
+    public CoffeeMakerModel updateOrder(Long id,CoffeeMakerReq req) throws BadRequestException {
+        Optional<CoffeeMakerModel> orderOptional = coffeeMakerRepository.findById(id);
+        if (orderOptional.isPresent()) {
+            CoffeeMakerModel res = orderOptional.get();
+            if (res.getOrderName() != req.getOrderName()){
+                res.setOrderName(req.getOrderName());
+            }
+            if (res.getSize() != req.getSize()){
+                res.setSize(req.getSize());
+            }
+            if (res.getIsMilk() != req.getIsMilk()){
+                res.setIsMilk(req.getIsMilk());
+            }
+            if (res.getIsSyrup() != req.getIsSyrup()){
+                res.setIsSyrup(req.getIsSyrup());
+            }
+            if (res.getHowSweet() != req.getHowSweet()){
+                res.setHowSweet(req.getHowSweet());
+            }
+            if (res.getIsIce() != req.getIsIce()){
+                res.setIsIce(req.getIsIce());
+            }
+            if (res.getIsTakeAway() != req.getIsTakeAway()){
+                res.setIsTakeAway(req.getIsTakeAway());
+            }
+            res.setPrice(res.getPrice()+10);
+            return coffeeMakerRepository.save(res);
+        }
+        throw new BadRequestException();
     }
 }

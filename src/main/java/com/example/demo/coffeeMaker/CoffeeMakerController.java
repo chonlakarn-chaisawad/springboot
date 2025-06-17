@@ -3,10 +3,9 @@ package com.example.demo.coffeeMaker;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/coffee-maker")
@@ -27,6 +26,24 @@ public class CoffeeMakerController {
     @PostMapping()
     public ResponseEntity<CoffeeMakerModel> createOrder(@RequestBody CoffeeMakerReq req) throws BadRequestException {
         CoffeeMakerModel res = coffeeMakerService.createOrder(req);
+        return ResponseEntity.ok(res);
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<CoffeeMakerModel>> getOrders() {
+        List<CoffeeMakerModel> res = coffeeMakerService.getOrder();
+        return ResponseEntity.ok(res);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CoffeeMakerModel> getOrderById(@PathVariable Long id) throws BadRequestException {
+        CoffeeMakerModel res = coffeeMakerService.getOrderById(id);
+        return ResponseEntity.ok(res);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CoffeeMakerModel> updateOrder(@PathVariable Long id, @RequestBody CoffeeMakerReq req) throws BadRequestException {
+        CoffeeMakerModel res = coffeeMakerService.updateOrder(id, req);
         return ResponseEntity.ok(res);
     }
 }
