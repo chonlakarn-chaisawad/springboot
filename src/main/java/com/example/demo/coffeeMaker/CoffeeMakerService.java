@@ -94,4 +94,8 @@ public class CoffeeMakerService {
         }
         throw new BadRequestException();
     }
+
+    public void deleteOrder (Long id){
+        coffeeMakerRepository.deleteById(id);
+    }
 }

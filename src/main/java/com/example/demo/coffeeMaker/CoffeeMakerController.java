@@ -46,4 +46,10 @@ public class CoffeeMakerController {
         CoffeeMakerModel res = coffeeMakerService.updateOrder(id, req);
         return ResponseEntity.ok(res);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteOrder(@PathVariable Long id) {
+        coffeeMakerService.deleteOrder(id);
+        return ResponseEntity.noContent().build();
+    }
 }
